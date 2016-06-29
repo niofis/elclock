@@ -90,7 +90,8 @@
         var time = new Date();
         var hours = time.getHours();
         var minutes = time.getMinutes();
-        var seconds = time.getSeconds();        
+        var seconds = time.getSeconds();
+        var millis = time.getMilliseconds();
 
         hands.clear();
 
@@ -112,8 +113,9 @@
 
         //seconds
         var sstep = (Math.PI * 2) / 60;
+        seconds += (millis/1000);
         seconds -= 15;
-        hands.lineStyle(1, 0x0, 1);
+        hands.lineStyle(2, 0x0, 1);
         hands.moveTo(center.x, center.y);
         hands.lineTo(Math.cos(sstep * seconds) * (radius - 45) + center.x,
                       Math.sin(sstep * seconds) * (radius - 45) + center.y);
