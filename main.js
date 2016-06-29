@@ -7,7 +7,12 @@ let win;
 function createWindow () {
   win = new BrowserWindow();
   win.loadURL(`file://${__dirname}/index.html`);
-  win.webContents.openDevTools();
+  //win.webContents.openDevTools();
+  //win.maximise();
+  if (process.platform !== 'darwin') {
+    win.setFullScreen(true);
+    win.setMenuBarVisibility(false);
+  }
 
   win.on('closed', () => {
     win = null;

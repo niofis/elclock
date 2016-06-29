@@ -9,6 +9,9 @@
         padding:0;
         background-color:#000000;
       }
+      ::-webkit-scrollbar { 
+            display: none; 
+      }
     </style>
   </head>
   <body>
@@ -20,7 +23,7 @@
       var hands = new PIXI.Graphics();
       var center = {x: 150, y: 150};
       var radius = 100;
-      var textStyle = {font : '12px Arial', fill:0xAAAAAA, align : 'center'};
+      var textStyle = {font : 'bold 18px Arial', fill:0xAAAAAA, align : 'center'};
 
       drawClock();
 
