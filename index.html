@@ -17,13 +17,13 @@
   <body>
     <script type="text/javascript" src="pixi.min.js"></script>
     <script type="text/javascript">
-      var renderer = PIXI.autoDetectRenderer(300,300, { backgroundColor: 0x000000, antialias: true });
+      var renderer = PIXI.autoDetectRenderer(640,480, { backgroundColor: 0x000000, antialias: true });
       var stage = new PIXI.Container();
       var graphics = new PIXI.Graphics();
       var hands = new PIXI.Graphics();
-      var center = {x: 150, y: 150};
-      var radius = 100;
-      var textStyle = {font : 'bold 18px Arial', fill:0xAAAAAA, align : 'center'};
+      var center = {x: 320, y: 240};
+      var radius = 230;
+      var textStyle = {font : 'bold 24px Arial', fill:0xAAAAAA, align : 'center'};
 
       drawClock();
 
@@ -49,7 +49,7 @@
         clock.drawCircle(center.x, center.y, 2);
 
         //Hours lines
-        clock.lineStyle(2, 0xAAAAAA, 1);
+        clock.lineStyle(5, 0xAAAAAA, 1);
 
 
         var step = (Math.PI * 2) / 12;
@@ -129,7 +129,7 @@
       }
 
 function resize() {
-  var ratio = 1;
+  var ratio = 640/480;
     if (window.innerWidth / window.innerHeight >= ratio) {
         var w = window.innerHeight * ratio;
         var h = window.innerHeight;
