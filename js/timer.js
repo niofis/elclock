@@ -29,7 +29,7 @@ var timer = (function () {
 
     drawHands();
 
-    text.text = Math.floor(elapsed / (1000*60))<D-r>;
+    text.text = Math.floor(elapsed / (1000*60));
 
     renderer.render(stage);
   }
