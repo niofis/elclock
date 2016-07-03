@@ -1,4 +1,4 @@
-var renderer = PIXI.autoDetectRenderer(640,480, { backgroundColor: 0x000000, antialias: false });
+var renderer = PIXI.autoDetectRenderer(640,480, { backgroundColor: 0x000000, antialias: true });
 
 document.body.appendChild(renderer.view);
 requestAnimationFrame(animate);

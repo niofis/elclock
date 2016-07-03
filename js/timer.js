@@ -1,6 +1,7 @@
 var timer = (function () {
   var stage = new PIXI.Container();
   var hands = new PIXI.Graphics();
+  var controls = new PIXI.Graphics();
   var center = {x: 320, y: 240};
   var radius = 230;
   var textStyle = {font : 'bold 24px Arial', fill:0xAAAAAA, align : 'center'};
@@ -8,6 +9,13 @@ var timer = (function () {
   var elapsed = 0;
   var running = false;
   var curTime = 0;
+
+  var stop_texture = PIXI.Texture.fromImage('img/stop.png');
+  var play_texture = PIXI.Texture.fromImage('img/play.png');
+  var pause_texture = PIXI.Texture.fromImage('img/pause.png');
+
+  var leftbtn = new PIXI.Sprite(play_texture);
+  var rightbtn = new PIXI.Sprite(stop_texture);
 
   function init () {
     drawClock();
@@ -17,6 +25,30 @@ var timer = (function () {
     text.anchor.y = 0.5;
     stage.addChild(text);
     stage.addChild(hands);
+
+    leftbtn.position.x = 20;
+    leftbtn.position.y = 380;
+    leftbtn.interactive = true;
+    leftbtn.mouseup = leftbtnMU;
+    stage.addChild(leftbtn);
+
+    rightbtn.position.x = 540;
+    rightbtn.position.y = 380;
+    rightbtn.interactive = true;
+    rightbtn.mouseup = rightbtnMU;
+    stage.addChild(rightbtn);
+  }
+
+  function leftbtnMU () {
+    if (running == false) {
+      start()
+    } else {
+      pause();
+    }
+  }
+
+  function rightbtnMU () {
+    stop();
   }
 
   function render (renderer) {
@@ -25,6 +57,10 @@ var timer = (function () {
       var tmp = new Date().getTime();
       elapsed += tmp - curTime;
       curTime = tmp;
+
+      leftbtn.texture = pause_texture;
+    } else {
+      leftbtn.texture = play_texture;
     }
 
     drawHands();
@@ -67,8 +103,15 @@ var timer = (function () {
 
   }
 
+
+
   function drawClock () {
     var clock = new PIXI.Graphics();
+
+    clock.interactive = true;
+    clock.mousedown = function (e) {
+      console.log(e.data.global);
+    }
 
     stage.addChild(clock);
 
