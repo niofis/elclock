@@ -170,6 +170,7 @@ var timer = (function () {
     render: render,
     start: start,
     stop: stop,
-    pause: pause
+    pause: pause,
+    stage: stage
   };
 })();

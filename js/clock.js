@@ -113,6 +113,7 @@ var clock = (function () {
 
   return {
     render: render,
-    update: update
+    update: update,
+    stage: stage
   };
 })();
