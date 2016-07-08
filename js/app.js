@@ -2,39 +2,30 @@ var renderer = PIXI.autoDetectRenderer(640,480, { backgroundColor: 0x000000, ant
 
 var CLOCK = 0;
 var TIMER = 1;
+var PHOTOS = 2;
+var STATES = 3;
 
-var clock_texture = PIXI.Texture.fromImage('img/clock.png');
-var timer_texture = PIXI.Texture.fromImage('img/timer.png');
-var state = CLOCK;
+var arrow_texture = PIXI.Texture.fromImage('img/arrow.png');
+var state;
 
-var timer_ctrl = new PIXI.Sprite(timer_texture);
-var clock_ctrl = new PIXI.Sprite(clock_texture);
+var arrow_ctrl = new PIXI.Sprite(arrow_texture);
 
 document.body.appendChild(renderer.view);
 requestAnimationFrame(animate);
 
 function init() {
 
-  timer_ctrl.interactive = true;
-  timer_ctrl.position.x = 540;
-  timer_ctrl.position.y = 20;
+  state = CLOCK;
+  renderer.clearBeforeRender = false;
 
-  clock_ctrl.interactive = true;
-  clock_ctrl.position.x = 540;
-  clock_ctrl.position.y = 20;
+  arrow_ctrl.interactive = true;
+  arrow_ctrl.position.x = 540;
+  arrow_ctrl.position.y = 20;
 
-
-  clock_ctrl.mouseup = timer_ctrl.mouseup = function () {
-    if (state == CLOCK) {
-      state = TIMER;
-    } else {
-      state = CLOCK;
-    }
+  arrow_ctrl.mouseup = function () {
+    state = (state + 1) % STATES;
   }
 
-  clock.stage.addChild(timer_ctrl);
-  timer.stage.addChild(clock_ctrl);
-  
   window.onresize = resize;
   resize();
 }
@@ -42,11 +33,19 @@ function init() {
 function animate () {
   requestAnimationFrame(animate);
 
-  if (state == CLOCK) {
-    clock.render(renderer);
-  } else {
-    timer.render(renderer);
+  
+  switch(state) {
+    case CLOCK:
+      clock.render(renderer);
+      break;
+    case TIMER:
+      timer.render(renderer);
+      break;
+    case PHOTOS:
+      photos.render(renderer);
+      break;
   }
+  renderer.render(arrow_ctrl);
 }
 
 function resize() {
