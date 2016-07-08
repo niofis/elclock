@@ -1,4 +1,5 @@
 var renderer = PIXI.autoDetectRenderer(640,480, { backgroundColor: 0x000000, antialias: true });
+var background;
 
 var CLOCK = 0;
 var TIMER = 1;
@@ -18,6 +19,10 @@ function init() {
   state = CLOCK;
   renderer.clearBeforeRender = false;
 
+  background= new PIXI.Graphics();
+  background.beginFill(0);
+  background.drawRect(0, 0, 640, 480);
+
   arrow_ctrl.interactive = true;
   arrow_ctrl.position.x = 540;
   arrow_ctrl.position.y = 20;
@@ -33,6 +38,7 @@ function init() {
 function animate () {
   requestAnimationFrame(animate);
 
+  renderer.render(background);
   
   switch(state) {
     case CLOCK:
