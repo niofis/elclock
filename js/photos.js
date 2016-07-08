@@ -22,7 +22,7 @@ var photos = (function () {
       url: 'https://api.cognitive.microsoft.com/bing/v5.0/images/search',
       data: {
         q:'abstract OR abstract art OR fractal OR nature wallpapers OR hubble wallpapers',
-        count:200,
+        count:1000,
         offset:0,
         mkt:'en-us',
         safeSearch: 'Strict'
