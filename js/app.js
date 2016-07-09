@@ -20,7 +20,7 @@ function createArrowBtn () {
   arrow_ctrl.position.x = 540;
   arrow_ctrl.position.y = 20;
 
-  arrow_ctrl.mouseup = function () {
+  arrow_ctrl.touchend = arrow_ctrl.mouseup = function () {
     state = (state + 1) % STATES;
   }
 
