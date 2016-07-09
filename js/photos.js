@@ -6,7 +6,10 @@ var photos = (function () {
   var time;
   var swap;
 
-  
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
   function init () {
 
     stage = new PIXI.Container();
@@ -45,9 +48,9 @@ var photos = (function () {
   }
 
   function changeImage () {
+    current = getRandomInt(0, images.length);
+    
     var img = images[current];
-
-    current = (current + 1) % images.length;
 
     var loader = new PIXI.loaders.Loader();
     loader.add('image', img.url);
@@ -76,7 +79,7 @@ var photos = (function () {
 
   function update () {
     var now = new Date().getTime();
-    if (now - time > 1000 * 7) {
+    if (now - time > 1000 * 30) {
       time = now;
       swap = true;
     }
