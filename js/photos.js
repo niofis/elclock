@@ -98,18 +98,18 @@ var photos = (function () {
 
     if (state == FADEOUT) {
       if (dif >= 0 && dif < 1) {
-        stage.alpha = 1 - dif;
+        sprite.alpha = 1 - dif;
       } else if (dif >=1) {
         changeImage();
         state = WAITING;
       }
     } else if(state == FADEIN) {
-      stage.alpha = dif;
+      sprite.alpha = dif;
       if (dif >=1) {
         state = NORMAL;
       }
     } else if(state == NORMAL) {
-      stage.alpha = 1;
+      sprite.alpha = 1;
     }
   }
 
