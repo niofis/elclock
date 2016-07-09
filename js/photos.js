@@ -51,8 +51,6 @@ var photos = (function () {
         };
       });
 
-      console.log(images.length)
-
       changeImage();
     });
     
