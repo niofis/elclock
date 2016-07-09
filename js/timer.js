@@ -29,13 +29,13 @@ var timer = (function () {
     leftbtn.position.x = 20;
     leftbtn.position.y = 380;
     leftbtn.interactive = true;
-    leftbtn.mouseup = leftbtnMU;
+    leftbtn.touchend = leftbtn.mouseup = leftbtnMU;
     stage.addChild(leftbtn);
 
     rightbtn.position.x = 540;
     rightbtn.position.y = 380;
     rightbtn.interactive = true;
-    rightbtn.mouseup = rightbtnMU;
+    rightbtn.touchend = rightbtn.mouseup = rightbtnMU;
     stage.addChild(rightbtn);
   }
 
