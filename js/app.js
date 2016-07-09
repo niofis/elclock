@@ -5,23 +5,16 @@ var CLOCK = 0;
 var TIMER = 1;
 var PHOTOS = 2;
 var STATES = 3;
-
-var arrow_texture = PIXI.Texture.fromImage('img/arrow.png');
 var state;
 
-var arrow_ctrl = new PIXI.Sprite(arrow_texture);
+var arrow_texture = PIXI.Texture.fromImage('img/arrow.png');
+
 
 document.body.appendChild(renderer.view);
 requestAnimationFrame(animate);
 
-function init() {
-
-  state = CLOCK;
-  renderer.clearBeforeRender = false;
-
-  background= new PIXI.Graphics();
-  background.beginFill(0);
-  background.drawRect(0, 0, 640, 480);
+function createArrowBtn () {
+  var arrow_ctrl = new PIXI.Sprite(arrow_texture);
 
   arrow_ctrl.interactive = true;
   arrow_ctrl.position.x = 540;
@@ -31,6 +24,17 @@ function init() {
     state = (state + 1) % STATES;
   }
 
+  return arrow_ctrl;
+}
+
+function init() {
+
+  state = CLOCK;
+
+  clock.stage.addChild(createArrowBtn());
+  timer.stage.addChild(createArrowBtn());
+  photos.stage.addChild(createArrowBtn());
+
   window.onresize = resize;
   resize();
 }
@@ -38,8 +42,6 @@ function init() {
 function animate () {
   requestAnimationFrame(animate);
 
-  renderer.render(background);
-  
   switch(state) {
     case CLOCK:
       clock.render(renderer);
@@ -51,7 +53,6 @@ function animate () {
       photos.render(renderer);
       break;
   }
-  renderer.render(arrow_ctrl);
 }
 
 function resize() {
