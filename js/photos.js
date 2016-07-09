@@ -5,6 +5,12 @@ var photos = (function () {
   var current;
   var time;
   var swap;
+  
+  var NORMAL = 0;
+  var FADEOUT = 1;
+  var FADEIN = 2;
+  var WAITING = 3;
+  var state = NORMAL;
 
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -66,6 +72,8 @@ var photos = (function () {
 
                        stage.removeChildren();
                        stage.addChild(sprite);
+      state = FADEIN;
+      time = new Date().getTime();
 
     });
     loader.load();
@@ -73,31 +81,32 @@ var photos = (function () {
 
   function render (renderer) {
     update();
-    swapImage();
     renderer.render(stage);
   }
 
   function update () {
     var now = new Date().getTime();
-    if (now - time > 1000 * 30) {
+    if (now - time > 1000 * 10) {
       time = now;
-      swap = true;
+      state = FADEOUT;
     }
-  }
-
-  function swapImage () {
-    if (!swap) return;
-    
-    var now = new Date().getTime();
+      
     var dif = (now - time) / 1000;
-    if (dif >= 0 && dif < 1) {
-      stage.alpha = 1-dif;
-    } else if (dif >= 1 && dif < 2) {
-      if((dif - 1) < 0.01) changeImage();
-      stage.alpha = dif - 1;
-    } else {
+
+    if (state == FADEOUT) {
+      if (dif >= 0 && dif < 1) {
+        stage.alpha = 1 - dif;
+      } else if (dif >=1) {
+        changeImage();
+        state = WAITING;
+      }
+    } else if(state == FADEIN) {
+      stage.alpha = dif;
+      if (dif >=1) {
+        state = NORMAL;
+      }
+    } else if(state == NORMAL) {
       stage.alpha = 1;
-      swap = false;
     }
   }
 
