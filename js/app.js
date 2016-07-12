@@ -4,7 +4,8 @@ var background;
 var CLOCK = 0;
 var TIMER = 1;
 var PHOTOS = 2;
-var STATES = 3;
+var PATHTR = 3;
+var STATES = 4;
 var state;
 
 var arrow_texture = PIXI.Texture.fromImage('img/arrow.png');
@@ -29,11 +30,12 @@ function createArrowBtn () {
 
 function init() {
 
-  state = CLOCK;
+  state = PATHTR;
 
   clock.stage.addChild(createArrowBtn());
   timer.stage.addChild(createArrowBtn());
   photos.stage.addChild(createArrowBtn());
+  pathtr.stage.addChild(createArrowBtn());
 
   window.onresize = resize;
   resize();
@@ -52,6 +54,10 @@ function animate () {
     case PHOTOS:
       photos.render(renderer);
       break;
+    case PATHTR:
+      pathtr.render(renderer);
+      break;
+
   }
 }
 
