@@ -2,19 +2,37 @@ var pathtr = (function () {
   var stage = new PIXI.Container();
   var graphics = new PIXI.Graphics();
   var sections = [];
-    var working = false;
+  var working = false;
+  var text = new PIXI.Text(0, {font : 'bold 24px Arial', fill:0xAAAAAA, align : 'left'});
+  var time = 0;
+  var workers_count = 4;
 
   function init () {
     graphics.scale.x = 2;
     graphics.scale.y = 2;
     stage.addChild(graphics);
+
+    stage.addChild(text);
+
+    
     createSections();
   }
 
   function start () {
+    time = new Date().getTime();
     working = true;
+    var workers_done = 0;
+
+    function done() {
+      workers_done++;
+      if(workers_done >= workers_count) {
+        var now = new Date().getTime();
+        let secs = (now - time)/1000;
+        text.text = secs + 's';
+      }
+    }
     
-    for(var i = 0; i < 4; ++i) {
+    for(var i = 0; i < workers_count; ++i) {
       (function () {
         var worker = new Worker('js/jsrb.js');
         
@@ -35,6 +53,7 @@ var pathtr = (function () {
             worker.postMessage(section);
           } else {
             worker = null;
+            done();
           }
         }
 
