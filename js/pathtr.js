@@ -5,7 +5,7 @@ var pathtr = (function () {
   var working = false;
   var text = new PIXI.Text(0, {font : 'bold 24px Arial', fill:0xAAAAAA, align : 'left'});
   var time = 0;
-  var workers_count = 4;
+  var workers_count = 8;
 
   function init () {
     graphics.scale.x = 2;
@@ -71,15 +71,17 @@ var pathtr = (function () {
     renderer.render(stage);
   }
 
-  function createSections () {
-    var width = 4;
-    var height = 4;
-    for(var y = 0; y < 240; y+=height) {
-      for(var x = 0; x < 320; x+=width) {
-        sections.push({x,y,width,height});
-      }
-    }
-  }
+  function createSections () {                                                            
+    var width = 320;                                                                      
+    var height = 240;                                                                     
+    var sw = 80;                                                                          
+    var sh = 80;                                                                          
+    for(var y = 0; y < height; y+=sh) {                                                   
+      for(var x = 0; x < width; x+=sw) {                                                  
+        sections.push({x:x,y:y,width:sw,height:sh});                                      
+      }                                                                                   
+    }                                                                                     
+  }                                                                                       
 
   init();
 
