@@ -5,6 +5,8 @@ var pathtr = (function () {
     var working = false;
 
   function init () {
+    graphics.scale.x = 2;
+    graphics.scale.y = 2;
     stage.addChild(graphics);
     createSections();
   }
@@ -53,8 +55,8 @@ var pathtr = (function () {
   function createSections () {
     var width = 4;
     var height = 4;
-    for(var y = 0; y < 480; y+=height) {
-      for(var x = 0; x < 640; x+=width) {
+    for(var y = 0; y < 240; y+=height) {
+      for(var x = 0; x < 320; x+=width) {
         sections.push({x,y,width,height});
       }
     }

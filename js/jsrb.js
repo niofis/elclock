@@ -155,7 +155,7 @@ class World {
       9999,
       new Vector3(1, 1, 1),
       false));
-
+/*
     this.spheres.push(new Sphere(
       new Vector3(-10012, 0, 0),
       9999,
@@ -173,12 +173,13 @@ class World {
       9999,
       new Vector3(1, 1, 1),
       false));
-
+*/
     this.spheres.push(new Sphere(
-      new Vector3(0, 10012, 0),
+      new Vector3(0, 11112, 0),
       9999,
       new Vector3(1, 1, 1),
       true));
+
 
     this.spheres.push(new Sphere(
       new Vector3(-5, 0, 2),
@@ -259,8 +260,8 @@ function trace (world, ray, depth) {
 class JSRB {
   constructor (ops) {
     ops = ops || {};
-    this.WIDTH = ops.width || 640;
-    this.HEIGHT = ops.height || 480;
+    this.WIDTH = ops.width || 320;
+    this.HEIGHT = ops.height || 240;
     this.SAMPLES = ops.samples || 5;
     this.MAX_DEPTH = ops.max_depth || 5;
   }
