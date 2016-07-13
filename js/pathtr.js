@@ -27,7 +27,7 @@ var pathtr = (function () {
       workers_done++;
       if(workers_done >= workers_count) {
         var now = new Date().getTime();
-        let secs = (now - time)/1000;
+        var secs = (now - time)/1000;
         text.text = secs + 's';
       }
     }
