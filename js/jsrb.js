@@ -1,8 +1,4 @@
 'use strict';
-const WIDTH = 640;
-const HEIGHT = 480;
-const SAMPLES = 50;
-const MAX_DEPTH = 5;
 
 class Vector3 {
   constructor (x, y, z) {
@@ -239,7 +235,7 @@ function trace (world, ray, depth) {
     }
   });
 
-  if (did_hit && depth < MAX_DEPTH) {
+  if (did_hit && depth < world.MAX_DEPTH) {
     if (sp.is_light != true) {
       let nray = new Ray(
           hit.point,
@@ -252,7 +248,7 @@ function trace (world, ray, depth) {
     }
   }
 
-  if (did_hit == false || depth >= MAX_DEPTH) {
+  if (did_hit == false || depth >= world.MAX_DEPTH) {
     color = new Vector3();
   }
 
@@ -261,11 +257,15 @@ function trace (world, ray, depth) {
 
 
 class JSRB {
-  constructor () {
+  constructor (ops) {
+    ops = ops || {};
+    this.WIDTH = ops.width || 640;
+    this.HEIGHT = ops.height || 480;
+    this.SAMPLES = ops.samples || 5;
+    this.MAX_DEPTH = ops.max_depth || 5;
   }
 
   transform (data) {
-    
     var result = data.map(function (row) {
       return row.map(function (pixel) {
         let r = Math.floor(pixel.x * 255.99) << 16;
@@ -279,18 +279,19 @@ class JSRB {
     return result;
   }
 
-
   render (callback) {
-    this.rendersection({x:0,y:240,width:100,height:100}, function (res) {
+    this.renderSection({x:0,y:0,width:this.WIDTH,height:this.HEIGHT}, function (res) {
       callback(res);
     });
   }
 
-  rendersection (section, callback) {
+  renderSection (section, callback) {
     let data = [];
     let world = new World();
-    let vdu = (world.camera.rt.sub(world.camera.lt)).div(WIDTH);
-    let vdv = (world.camera.lb.sub(world.camera.lt)).div(HEIGHT);
+    let vdu = (world.camera.rt.sub(world.camera.lt)).div(this.WIDTH);
+    let vdv = (world.camera.lb.sub(world.camera.lt)).div(this.HEIGHT);
+
+    world.MAX_DEPTH = this.MAX_DEPTH;
 
     for(let y = 0; y < section.width; ++y) {
       data[y] = [];
@@ -300,7 +301,7 @@ class JSRB {
 
         ray.origin = world.camera.eye;
 
-        for(let i = 0; i < SAMPLES; ++i) {
+        for(let i = 0; i < this.SAMPLES; ++i) {
           ray.direction = world.camera.lt.add(
             vdu.mul(x + Math.random() + section.x).add(
               vdv.mul(y + Math.random() + section.y)));
@@ -310,7 +311,7 @@ class JSRB {
               color = color.add(trace(world, ray, 0));
         }
 
-        color = color.div(SAMPLES);
+        color = color.div(this.SAMPLES);
 
         data[y][x] = color;
       }
@@ -319,4 +320,17 @@ class JSRB {
     callback(this.transform(data));
   }
 }
+
+var jsrb = new JSRB();
+
+onmessage = function (msg) {
+  jsrb.renderSection(msg.data, function (data) {
+    var res = {};
+    res.section = msg.data;
+    res.img = data;
+    postMessage(res);
+  });
+};
+
+
 
