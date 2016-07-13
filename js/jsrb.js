@@ -153,7 +153,7 @@ class World {
     this.spheres.push(new Sphere(
       new Vector3(0, -10002, 0),
       9999,
-      new Vector3(1, 1, 1),
+      new Vector3(0.5, 0.5, 0.5),
       false));
 /*
     this.spheres.push(new Sphere(
