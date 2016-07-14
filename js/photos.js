@@ -1,4 +1,4 @@
-var photos = (function () {
+function Photos (resolution) {
   var stage;
   var front
   var images;
@@ -34,7 +34,7 @@ var photos = (function () {
     $.ajax({
       url: 'https://api.cognitive.microsoft.com/bing/v5.0/images/search',
       data: {
-        q: 'hubble wallpapers OR abstract OR abstract art OR fractal OR nature wallpapers',
+        q: 'hubble wallpapers',
         count: 150,
         offset: 0,
         mkt:'en-us',
@@ -68,12 +68,12 @@ var photos = (function () {
       
       sprite.texture = e.resources.image.texture;
 
-      ratio = Math.min(640/img.width,
-                       480/img.height);
+      ratio = Math.min(resolution.width/img.width,
+                       resolution.height/img.height);
                        sprite.scale.x = ratio;
                        sprite.scale.y = ratio;
-                       sprite.x = (640 - img.width*ratio) / 2;
-                       sprite.y = (480 - img.height*ratio) / 2;
+                       sprite.x = (resolution.width - img.width*ratio) / 2;
+                       sprite.y = (resolution.height - img.height*ratio) / 2;
 
       state = FADEIN;
       time = new Date().getTime();
@@ -119,4 +119,4 @@ var photos = (function () {
     render: render,
     stage: stage
   };
-})();
+};

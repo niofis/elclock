@@ -1,8 +1,8 @@
-var clock = (function () {
+function Clock (resolution) {
   var stage = new PIXI.Container();
   var hands = new PIXI.Graphics();
-  var center = {x: 320, y: 240};
-  var radius = 230;
+  var center = {x: resolution.width / 2, y: resolution.height / 2};
+  var radius = resolution.height / 2 - 10;
   var textStyle = {font : 'bold 24px Arial', fill:0xAAAAAA, align : 'center'};
 
   function init () {
@@ -116,4 +116,4 @@ var clock = (function () {
     update: update,
     stage: stage
   };
-})();
+};

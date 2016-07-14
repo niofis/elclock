@@ -1,4 +1,4 @@
-var pathtr = (function () {
+function PathTr (resolution) {
   var stage = new PIXI.Container();
   var graphics = new PIXI.Graphics();
   var sections = [];
@@ -6,10 +6,19 @@ var pathtr = (function () {
   var text = new PIXI.Text(0, {font : 'bold 24px Arial', fill:0xAAAAAA, align : 'left'});
   var time = 0;
   var workers_count = 8;
+  var render_res = {width: 320, height: 240};
 
   function init () {
-    graphics.scale.x = 2;
-    graphics.scale.y = 2;
+    var ratio = render_res.width/render_res.height;
+    if (resolution.width / resolution.height >= ratio) {
+      var w = resolution.height * ratio;
+      var h = resolution.height;
+    } else {
+      var w = resolution.width;
+      var h = resolution.width / ratio;
+    }
+    graphics.scale.x = w / render_res.width;
+    graphics.scale.y = h / render_res.height;
     stage.addChild(graphics);
 
     stage.addChild(text);
@@ -71,17 +80,18 @@ var pathtr = (function () {
     renderer.render(stage);
   }
 
-  function createSections () {                                                            
-    var width = 320;                                                                      
-    var height = 240;                                                                     
-    var sw = 80;                                                                          
-    var sh = 80;                                                                          
-    for(var y = 0; y < height; y+=sh) {                                                   
-      for(var x = 0; x < width; x+=sw) {                                                  
-        sections.push({x:x,y:y,width:sw,height:sh});                                      
-      }                                                                                   
-    }                                                                                     
-  }                                                                                       
+  function createSections () {                                                       
+    var width = render_res.width;
+    var height = render_res.height;
+    var sw = 80;
+    var sh = 80;
+
+    for(var y = 0; y < height; y+=sh) {
+      for(var x = 0; x < width; x+=sw) {
+        sections.push({x:x,y:y,width:sw,height:sh});
+      }
+    }
+  }
 
   init();
 
@@ -90,4 +100,4 @@ var pathtr = (function () {
     render: render,
     stage: stage
   };
-})();
+};

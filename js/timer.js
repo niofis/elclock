@@ -1,9 +1,9 @@
-var timer = (function () {
+function Timer (resolution) {
   var stage = new PIXI.Container();
   var hands = new PIXI.Graphics();
   var controls = new PIXI.Graphics();
-  var center = {x: 320, y: 240};
-  var radius = 230;
+  var center = {x: resolution.width / 2, y: resolution.height / 2};
+  var radius = resolution.height / 2 - 10;
   var textStyle = {font : 'bold 24px Arial', fill:0xAAAAAA, align : 'center'};
   var text = new PIXI.Text(0, {font : 'bold 48px Arial', fill:0x0, align : 'center'});
   var elapsed = 0;
@@ -27,13 +27,13 @@ var timer = (function () {
     stage.addChild(hands);
 
     leftbtn.position.x = 20;
-    leftbtn.position.y = 380;
+    leftbtn.position.y = resolution.height - 100;
     leftbtn.interactive = true;
     leftbtn.touchend = leftbtn.mouseup = leftbtnMU;
     stage.addChild(leftbtn);
 
-    rightbtn.position.x = 540;
-    rightbtn.position.y = 380;
+    rightbtn.position.x = resolution.width - 100;
+    rightbtn.position.y = resolution.height - 100;
     rightbtn.interactive = true;
     rightbtn.touchend = rightbtn.mouseup = rightbtnMU;
     stage.addChild(rightbtn);
@@ -173,4 +173,4 @@ var timer = (function () {
     pause: pause,
     stage: stage
   };
-})();
+};
