@@ -5,8 +5,8 @@ function PathTr (resolution) {
   var working = false;
   var text = new PIXI.Text(0, {font : 'bold 24px Arial', fill:0xAAAAAA, align : 'left'});
   var time = 0;
-  var workers_count = 8;
-  var render_res = {width: 320, height: 240};
+  var workers_count = 2;
+  var render_res = {width: 480, height: 272};
 
   function init () {
     var ratio = render_res.width/render_res.height;

@@ -1,4 +1,4 @@
-var resolution = {width:640, height:480};
+var resolution = {width:480, height:272};
 (function (resolution, clock, timer, photos, pathtr) {
   var renderer = PIXI.autoDetectRenderer(resolution.width,resolution.height, { backgroundColor: 0x000000, antialias: true });
   var background;
